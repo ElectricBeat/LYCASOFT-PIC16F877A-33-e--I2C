@@ -1,0 +1,1135 @@
+
+
+HI-TECH Software PIC LITE Macro Assembler V9.83 build 10920 
+                                                                                               Fri Jan 11 18:54:09 2019
+
+HI-TECH Software Omniscient Code Generator (Lite mode) build 10920
+     1  0000                     opt subtitle "HI-TECH Software Omniscient Code Generator (Lite mode) build 10920"
+     2                           
+     3                           opt pagewidth 120
+     4                           
+     5                           	opt lm
+     6                           
+     7                           	processor	16F877A
+     8                           clrc	macro
+     9                           	bcf	3,0
+    10  0000                     	endm
+    11                           clrz	macro
+    12                           	bcf	3,2
+    13  0000                     	endm
+    14                           setc	macro
+    15                           	bsf	3,0
+    16  0000                     	endm
+    17                           setz	macro
+    18                           	bsf	3,2
+    19  0000                     	endm
+    20                           skipc	macro
+    21                           	btfss	3,0
+    22  0000                     	endm
+    23                           skipz	macro
+    24                           	btfss	3,2
+    25  0000                     	endm
+    26                           skipnc	macro
+    27                           	btfsc	3,0
+    28  0000                     	endm
+    29                           skipnz	macro
+    30                           	btfsc	3,2
+    31  0000                     	endm
+    32  0000                     indf	equ	0
+    33  0000                     indf0	equ	0
+    34  0002                     pc	equ	2
+    35  0002                     pcl	equ	2
+    36  0003                     status	equ	3
+    37  0004                     fsr	equ	4
+    38  0004                     fsr0	equ	4
+    39  0001                     c	equ	1
+    40  0000                     z	equ	0
+    41  000A                     pclath	equ	10
+    42                           	FNCALL	_main,_cmd
+    43                           	FNCALL	_main,_i2c_Start
+    44                           	FNCALL	_main,_receive
+    45                           	FNCALL	_main,_i2c_Stop
+    46                           	FNCALL	_i2c_Stop,_i2c_Wait
+    47                           	FNCALL	_i2c_Start,_i2c_Wait
+    48                           	FNROOT	_main
+    49                           	global	main@F1107
+    50                           psect	idataBANK0,class=CODE,space=0,delta=2
+    51                           global __pidataBANK0
+    52  06EF                     __pidataBANK0:
+    53                           	file	"E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CO
+                                 DE\SLAVE\I2C SLAVE.c"
+    54                           	line	44
+    55                           
+    56                           ;initializer for main@F1107
+    57  06EF  3453               	retlw	053h
+    58  06F0  3454               	retlw	054h
+    59  06F1  3452               	retlw	052h
+    60  06F2  3449               	retlw	049h
+    61  06F3  344E               	retlw	04Eh
+    62  06F4  3447               	retlw	047h
+    63  06F5  3400               	retlw	0
+    64                           	global	_PORTB
+    65  0006                     _PORTB	set	6
+    66                           	global	_PORTC
+    67  0007                     _PORTC	set	7
+    68                           	global	_PORTD
+    69  0008                     _PORTD	set	8
+    70                           	global	_SSPBUF
+    71  0013                     _SSPBUF	set	19
+    72                           	global	_SSPCON
+    73  0014                     _SSPCON	set	20
+    74                           	global	_CARRY
+    75  0018                     _CARRY	set	24
+    76                           	global	_CKP
+    77  00A4                     _CKP	set	164
+    78                           	global	_GIE
+    79  005F                     _GIE	set	95
+    80                           	global	_RB0
+    81  0030                     _RB0	set	48
+    82                           	global	_RB1
+    83  0031                     _RB1	set	49
+    84                           	global	_RB2
+    85  0032                     _RB2	set	50
+    86                           	global	_SSPIF
+    87  0063                     _SSPIF	set	99
+    88                           	global	_SSPADD
+    89  0093                     _SSPADD	set	147
+    90                           	global	_SSPCON2
+    91  0091                     _SSPCON2	set	145
+    92                           	global	_SSPSTAT
+    93  0094                     _SSPSTAT	set	148
+    94                           	global	_TRISB
+    95  0086                     _TRISB	set	134
+    96                           	global	_TRISD
+    97  0088                     _TRISD	set	136
+    98                           	global	_ACKSTAT
+    99  048E                     _ACKSTAT	set	1166
+   100                           	global	_PEN
+   101  048A                     _PEN	set	1162
+   102                           	global	_SEN
+   103  0488                     _SEN	set	1160
+   104                           	global	_TRISC3
+   105  043B                     _TRISC3	set	1083
+   106                           	global	_TRISC4
+   107  043C                     _TRISC4	set	1084
+   108                           	global	_EEADR
+   109  010D                     _EEADR	set	269
+   110                           	global	_EEDATA
+   111  010C                     _EEDATA	set	268
+   112                           	global	_EECON1
+   113  018C                     _EECON1	set	396
+   114                           	global	_EECON2
+   115  018D                     _EECON2	set	397
+   116                           	global	_RD
+   117  0C60                     _RD	set	3168
+   118                           	global	_WR
+   119  0C61                     _WR	set	3169
+   120                           	global	_WREN
+   121  0C62                     _WREN	set	3170
+   122                           	file	"I2C SLAVE.as"
+   123                           	line	#
+   124                           psect cinit,class=CODE,delta=2
+   125                           global start_initialization
+   126  0718                     start_initialization:
+   127                           
+   128                           psect	dataBANK0,class=BANK0,space=1
+   129                           global __pdataBANK0
+   130  0028                     __pdataBANK0:
+   131                           	file	"E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CO
+                                 DE\SLAVE\I2C SLAVE.c"
+   132  0028                     main@F1107:
+   133  0028                            ds      7
+   134                           
+   135                           global btemp
+   136                           psect inittext,class=CODE,delta=2
+   137                           global init_fetch,btemp
+   138                           ;	Called with low address in FSR and high address in W
+   139  072A                     init_fetch:
+   140  072A  087E               	movf btemp,w
+   141  072B  008A               	movwf pclath
+   142  072C  087F               	movf btemp+1,w
+   143  072D  0082               	movwf pc
+   144                           global init_ram
+   145                           ;Called with:
+   146                           ;	high address of idata address in btemp 
+   147                           ;	low address of idata address in btemp+1 
+   148                           ;	low address of data in FSR
+   149                           ;	high address + 1 of data in btemp-1
+   150  072E                     init_ram:
+   151  072E  120A  118A  272A   	fcall init_fetch
+              120A  118A         
+   152  0733  0080               	movwf indf,f
+   153  0734  0A84               	incf fsr,f
+   154  0735  0804               	movf fsr,w
+   155  0736  067D               	xorwf btemp-1,w
+   156  0737  1903               	btfsc status,2
+   157  0738  3400               	retlw 0
+   158  0739  0AFF               	incf btemp+1,f
+   159  073A  1903               	btfsc status,2
+   160  073B  0AFE               	incf btemp,f
+   161  073C  2F2E               	goto init_ram
+   162                           ; Initialize objects allocated to BANK0
+   163                           psect cinit,class=CODE,delta=2
+   164                           global init_ram, __pidataBANK0
+   165  0718  1383               	bcf	status, 7	;select IRP bank0
+   166  0719  302F               	movlw low(__pdataBANK0+7)
+   167  071A  00FD               	movwf btemp-1,f
+   168  071B  3006               	movlw high(__pidataBANK0)
+   169  071C  00FE               	movwf btemp,f
+   170  071D  30EF               	movlw low(__pidataBANK0)
+   171  071E  00FF               	movwf btemp+1,f
+   172  071F  3028               	movlw low(__pdataBANK0)
+   173  0720  0084               	movwf fsr,f
+   174  0721  120A  118A  272E   	fcall init_ram
+              120A  118A         
+   175                           psect cinit,class=CODE,delta=2
+   176                           global end_of_initialization
+   177                           
+   178                           ;End of C runtime variable initialization code
+   179                           
+   180  0726                     end_of_initialization:
+   181  0726  0183               clrf status
+   182  0727  120A  118A  2F72   ljmp _main	;jump to C main() function
+   183                           psect	cstackCOMMON,class=COMMON,space=1
+   184                           global __pcstackCOMMON
+   185  0070                     __pcstackCOMMON:
+   186                           	global	?_i2c_Wait
+   187  0070                     ?_i2c_Wait:	; 0 bytes @ 0x0
+   188                           	global	??_i2c_Wait
+   189  0070                     ??_i2c_Wait:	; 0 bytes @ 0x0
+   190                           	global	?_i2c_Start
+   191  0070                     ?_i2c_Start:	; 0 bytes @ 0x0
+   192                           	global	??_i2c_Start
+   193  0070                     ??_i2c_Start:	; 0 bytes @ 0x0
+   194                           	global	?_i2c_Stop
+   195  0070                     ?_i2c_Stop:	; 0 bytes @ 0x0
+   196                           	global	??_i2c_Stop
+   197  0070                     ??_i2c_Stop:	; 0 bytes @ 0x0
+   198                           	global	??_receive
+   199  0070                     ??_receive:	; 0 bytes @ 0x0
+   200                           	global	?_cmd
+   201  0070                     ?_cmd:	; 0 bytes @ 0x0
+   202                           	global	?_main
+   203  0070                     ?_main:	; 0 bytes @ 0x0
+   204                           	global	?_receive
+   205  0070                     ?_receive:	; 1 bytes @ 0x0
+   206                           	global	cmd@y
+   207  0070                     cmd@y:	; 1 bytes @ 0x0
+   208  0070                     	ds	1
+   209                           	global	??_cmd
+   210  0071                     ??_cmd:	; 0 bytes @ 0x1
+   211  0071                     	ds	2
+   212                           	global	receive@s
+   213  0073                     receive@s:	; 1 bytes @ 0x3
+   214  0073                     	ds	1
+   215                           	global	cmd@x
+   216  0074                     cmd@x:	; 1 bytes @ 0x4
+   217  0074                     	ds	1
+   218                           	global	??_main
+   219  0075                     ??_main:	; 0 bytes @ 0x5
+   220  0075                     	ds	4
+   221                           psect	cstackBANK0,class=BANK0,space=1
+   222                           global __pcstackBANK0
+   223  0020                     __pcstackBANK0:
+   224                           	global	main@a
+   225  0020                     main@a:	; 7 bytes @ 0x0
+   226  0020                     	ds	7
+   227                           	global	main@ch
+   228  0027                     main@ch:	; 1 bytes @ 0x7
+   229  0027                     	ds	1
+   230 ;;Data sizes: Strings 0, constant 0, data 7, bss 0, persistent 0 stack 0
+   231 ;;Auto spaces:   Size  Autos    Used
+   232 ;; COMMON          14      9       9
+   233 ;; BANK0           80      8      15
+   234 ;; BANK1           80      0       0
+   235 ;; BANK3           96      0       0
+   236 ;; BANK2           96      0       0
+   237                           
+   238 ;;
+   239 ;; Pointer list with targets:
+   240                           
+   241                           
+   242                           
+   243 ;;
+   244 ;; Critical Paths under _main in COMMON
+   245 ;;
+   246 ;;   _main->_cmd
+   247 ;;
+   248 ;; Critical Paths under _main in BANK0
+   249 ;;
+   250 ;;   None.
+   251 ;;
+   252 ;; Critical Paths under _main in BANK1
+   253 ;;
+   254 ;;   None.
+   255 ;;
+   256 ;; Critical Paths under _main in BANK3
+   257 ;;
+   258 ;;   None.
+   259 ;;
+   260 ;; Critical Paths under _main in BANK2
+   261 ;;
+   262 ;;   None.
+   263                           
+   264 ;;
+   265 ;;Main: autosize = 0, tempsize = 4, incstack = 0, save=0
+   266 ;;
+   267                           
+   268 ;;
+   269 ;;Call Graph Tables:
+   270 ;;
+   271 ;; ---------------------------------------------------------------------------------
+   272 ;; (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+   273 ;; ---------------------------------------------------------------------------------
+   274 ;; (0) _main                                                14    14      0      69
+   275 ;;                                              5 COMMON     4     4      0
+   276 ;;                                              0 BANK0      8     8      0
+   277 ;;                                _cmd
+   278 ;;                          _i2c_Start
+   279 ;;                            _receive
+   280 ;;                           _i2c_Stop
+   281 ;; ---------------------------------------------------------------------------------
+   282 ;; (1) _cmd                                                  5     4      1      44
+   283 ;;                                              0 COMMON     5     4      1
+   284 ;; ---------------------------------------------------------------------------------
+   285 ;; (1) _receive                                              4     4      0      23
+   286 ;;                                              0 COMMON     4     4      0
+   287 ;; ---------------------------------------------------------------------------------
+   288 ;; (1) _i2c_Stop                                             0     0      0       0
+   289 ;;                           _i2c_Wait
+   290 ;; ---------------------------------------------------------------------------------
+   291 ;; (1) _i2c_Start                                            0     0      0       0
+   292 ;;                           _i2c_Wait
+   293 ;; ---------------------------------------------------------------------------------
+   294 ;; (2) _i2c_Wait                                             0     0      0       0
+   295 ;; ---------------------------------------------------------------------------------
+   296 ;; Estimated maximum stack depth 2
+   297 ;; ---------------------------------------------------------------------------------
+   298                           
+   299 ;; Call Graph Graphs:
+   300                           
+   301 ;; _main (ROOT)
+   302 ;;   _cmd
+   303 ;;   _i2c_Start
+   304 ;;     _i2c_Wait
+   305 ;;   _receive
+   306 ;;   _i2c_Stop
+   307 ;;     _i2c_Wait
+   308 ;;
+   309                           
+   310 ;; Address spaces:
+   311                           
+   312 ;;Name               Size   Autos  Total    Cost      Usage
+   313 ;;BANK3               60      0       0       9        0.0%
+   314 ;;BITBANK3            60      0       0       8        0.0%
+   315 ;;SFR3                 0      0       0       4        0.0%
+   316 ;;BITSFR3              0      0       0       4        0.0%
+   317 ;;BANK2               60      0       0      11        0.0%
+   318 ;;BITBANK2            60      0       0      10        0.0%
+   319 ;;SFR2                 0      0       0       5        0.0%
+   320 ;;BITSFR2              0      0       0       5        0.0%
+   321 ;;SFR1                 0      0       0       2        0.0%
+   322 ;;BITSFR1              0      0       0       2        0.0%
+   323 ;;BANK1               50      0       0       7        0.0%
+   324 ;;BITBANK1            50      0       0       6        0.0%
+   325 ;;CODE                 0      0       0       0        0.0%
+   326 ;;DATA                 0      0      1A      12        0.0%
+   327 ;;ABS                  0      0      18       3        0.0%
+   328 ;;NULL                 0      0       0       0        0.0%
+   329 ;;STACK                0      0       2       2        0.0%
+   330 ;;BANK0               50      8       F       5       18.8%
+   331 ;;BITBANK0            50      0       0       4        0.0%
+   332 ;;SFR0                 0      0       0       1        0.0%
+   333 ;;BITSFR0              0      0       0       1        0.0%
+   334 ;;COMMON               E      9       9       1       64.3%
+   335 ;;BITCOMMON            E      0       0       0        0.0%
+   336 ;;EEDATA             100      0       0       0        0.0%
+   337                           
+   338                           	global	_main
+   339                           psect	maintext,global,class=CODE,delta=2
+   340                           global __pmaintext
+   341  0772                     __pmaintext:
+   342                           
+   343 ;; *************** function _main *****************
+   344 ;; Defined at:
+   345 ;;		line 41 in file "E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CODE\SLAVE\I2C SLAVE
+       .c"
+   346 ;; Parameters:    Size  Location     Type
+   347 ;;		None
+   348 ;; Auto vars:     Size  Location     Type
+   349 ;;  a               7    0[BANK0 ] unsigned char [7]
+   350 ;;  i               2    0        int 
+   351 ;;  ch              1    7[BANK0 ] unsigned char 
+   352 ;; Return value:  Size  Location     Type
+   353 ;;		None               void
+   354 ;; Registers used:
+   355 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+   356 ;; Tracked objects:
+   357 ;;		On entry : 17F/0
+   358 ;;		On exit  : 0/0
+   359 ;;		Unchanged: 0/0
+   360 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   361 ;;      Params:         0       0       0       0       0
+   362 ;;      Locals:         0       8       0       0       0
+   363 ;;      Temps:          4       0       0       0       0
+   364 ;;      Totals:         4       8       0       0       0
+   365 ;;Total ram usage:       12 bytes
+   366 ;; Hardware stack levels required when called:    2
+   367 ;; This function calls:
+   368 ;;		_cmd
+   369 ;;		_i2c_Start
+   370 ;;		_receive
+   371 ;;		_i2c_Stop
+   372 ;; This function is called by:
+   373 ;;		Startup code after reset
+   374 ;; This function uses a non-reentrant model
+   375 ;;
+   376                           psect	maintext
+   377                           	file	"E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CO
+                                 DE\SLAVE\I2C SLAVE.c"
+   378                           	line	41
+   379                           	global	__size_of_main
+   380  008E                     	__size_of_main	equ	__end_of_main-_main
+   381                           	
+   382  0772                     _main:	
+   383                           	opt	stack 6
+   384                           ; Regs used in _main: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+   385                           	line	44
+   386                           	
+   387  0772                     l2720:	
+   388                           ;I2C SLAVE.c: 42: int i;
+   389                           ;I2C SLAVE.c: 43: char ch;
+   390                           ;I2C SLAVE.c: 44: char a[]="STRING";
+   391  0772  3020               	movlw	(main@a)&0ffh
+   392  0773  0084               	movwf	fsr0
+   393  0774  3028               	movlw	low(main@F1107)
+   394  0775  00F5               	movwf	(??_main+0)+0
+   395  0776  0804               	movf	fsr0,w
+   396  0777  00F6               	movwf	((??_main+0)+0+1)
+   397  0778  3007               	movlw	7
+   398  0779  00F7               	movwf	((??_main+0)+0+2)
+   399  077A                     u2320:
+   400  077A  0875               	movf	(??_main+0)+0,w
+   401  077B  0084               	movwf	fsr0
+   402  077C  1383               	bcf	status, 7	;select IRP bank0
+   403                           	
+   404  077D  0800               	movf	indf,w
+   405  077E  00F8               	movwf	((??_main+0)+0+3)
+   406  077F  0AF5               	incf	(??_main+0)+0,f
+   407  0780  0876               	movf	((??_main+0)+0+1),w
+   408  0781  0084               	movwf	fsr0
+   409                           	
+   410  0782  0878               	movf	((??_main+0)+0+3),w
+   411  0783  0080               	movwf	indf
+   412  0784  0AF6               	incf	((??_main+0)+0+1),f
+   413  0785  0BF7               	decfsz	((??_main+0)+0+2),f
+   414  0786  2F7A               	goto	u2320
+   415                           	line	46
+   416                           	
+   417  0787                     l2722:	
+   418                           ;I2C SLAVE.c: 46: TRISB=0x00;
+   419  0787  1683               	bsf	status, 5	;RP0=1, select bank1
+   420  0788  1303               	bcf	status, 6	;RP1=0, select bank1
+   421  0789  0186               	clrf	(134)^080h	;volatile
+   422                           	line	47
+   423                           	
+   424  078A                     l2724:	
+   425                           ;I2C SLAVE.c: 47: PORTB=0x00;
+   426  078A  1283               	bcf	status, 5	;RP0=0, select bank0
+   427  078B  1303               	bcf	status, 6	;RP1=0, select bank0
+   428  078C  0186               	clrf	(6)	;volatile
+   429                           	line	49
+   430                           	
+   431  078D                     l2726:	
+   432                           ;I2C SLAVE.c: 49: TRISD=0x00;
+   433  078D  1683               	bsf	status, 5	;RP0=1, select bank1
+   434  078E  1303               	bcf	status, 6	;RP1=0, select bank1
+   435  078F  0188               	clrf	(136)^080h	;volatile
+   436                           	line	50
+   437                           	
+   438  0790                     l2728:	
+   439                           ;I2C SLAVE.c: 50: PORTD=0x00;
+   440  0790  1283               	bcf	status, 5	;RP0=0, select bank0
+   441  0791  1303               	bcf	status, 6	;RP1=0, select bank0
+   442  0792  0188               	clrf	(8)	;volatile
+   443                           	line	52
+   444                           	
+   445  0793                     l2730:	
+   446                           ;I2C SLAVE.c: 52: TRISC3=1;
+   447  0793  1683               	bsf	status, 5	;RP0=1, select bank1
+   448  0794  1303               	bcf	status, 6	;RP1=0, select bank1
+   449  0795  1587               	bsf	(1083/8)^080h,(1083)&7
+   450                           	line	53
+   451                           	
+   452  0796                     l2732:	
+   453                           ;I2C SLAVE.c: 53: TRISC4=1;
+   454  0796  1607               	bsf	(1084/8)^080h,(1084)&7
+   455                           	line	54
+   456                           	
+   457  0797                     l2734:	
+   458                           ;I2C SLAVE.c: 54: PORTC=0x00;
+   459  0797  1283               	bcf	status, 5	;RP0=0, select bank0
+   460  0798  1303               	bcf	status, 6	;RP1=0, select bank0
+   461  0799  0187               	clrf	(7)	;volatile
+   462                           	line	56
+   463                           	
+   464  079A                     l2736:	
+   465                           ;I2C SLAVE.c: 56: cmd(0x38,0);
+   466  079A  01F0               	clrf	(?_cmd)
+   467  079B  3038               	movlw	(038h)
+   468  079C  120A  118A  2754   	fcall	_cmd
+              120A  118A         
+   469                           	line	57
+   470                           	
+   471  07A1                     l2738:	
+   472                           ;I2C SLAVE.c: 57: cmd(0x06,0);
+   473  07A1  01F0               	clrf	(?_cmd)
+   474  07A2  3006               	movlw	(06h)
+   475  07A3  120A  118A  2754   	fcall	_cmd
+              120A  118A         
+   476                           	line	58
+   477                           	
+   478  07A8                     l2740:	
+   479                           ;I2C SLAVE.c: 58: cmd(0x01,0);
+   480  07A8  01F0               	clrf	(?_cmd)
+   481  07A9  3001               	movlw	(01h)
+   482  07AA  120A  118A  2754   	fcall	_cmd
+              120A  118A         
+   483                           	line	59
+   484                           	
+   485  07AF                     l2742:	
+   486                           ;I2C SLAVE.c: 59: cmd(0x80,0);
+   487  07AF  01F0               	clrf	(?_cmd)
+   488  07B0  3080               	movlw	(080h)
+   489  07B1  120A  118A  2754   	fcall	_cmd
+              120A  118A         
+   490                           	line	60
+   491                           	
+   492  07B6                     l2744:	
+   493                           ;I2C SLAVE.c: 60: cmd(0x0d,0);
+   494  07B6  01F0               	clrf	(?_cmd)
+   495  07B7  300D               	movlw	(0Dh)
+   496  07B8  120A  118A  2754   	fcall	_cmd
+              120A  118A         
+   497                           	line	61
+   498                           	
+   499  07BD                     l2746:	
+   500                           ;I2C SLAVE.c: 61: _delay((unsigned long)((50)*(20000000/4000.0)));
+   501                           	opt asmopt_off
+   502  07BD  3002               movlw  2
+   503  07BE  00F7               movwf	((??_main+0)+0+2),f
+   504  07BF  3045               movlw	69
+   505  07C0  00F6               movwf	((??_main+0)+0+1),f
+   506  07C1  30A9               	movlw	169
+   507  07C2  00F5               movwf	((??_main+0)+0),f
+   508  07C3                     u2347:
+   509  07C3  0BF5               	decfsz	((??_main+0)+0),f
+   510  07C4  2FC3               	goto	u2347
+   511  07C5  0BF6               	decfsz	((??_main+0)+0+1),f
+   512  07C6  2FC3               	goto	u2347
+   513  07C7  0BF7               	decfsz	((??_main+0)+0+2),f
+   514  07C8  2FC3               	goto	u2347
+   515  07C9  2FCA               	nop2
+   516                           opt asmopt_on
+   517                           
+   518                           	line	63
+   519                           	
+   520  07CA                     l2748:	
+   521                           ;I2C SLAVE.c: 63: SSPSTAT=0x84;
+   522  07CA  3084               	movlw	(084h)
+   523  07CB  1683               	bsf	status, 5	;RP0=1, select bank1
+   524  07CC  1303               	bcf	status, 6	;RP1=0, select bank1
+   525  07CD  0094               	movwf	(148)^080h	;volatile
+   526                           	line	64
+   527                           	
+   528  07CE                     l2750:	
+   529                           ;I2C SLAVE.c: 64: SSPCON=0x66;
+   530  07CE  3066               	movlw	(066h)
+   531  07CF  1283               	bcf	status, 5	;RP0=0, select bank0
+   532  07D0  1303               	bcf	status, 6	;RP1=0, select bank0
+   533  07D1  0094               	movwf	(20)	;volatile
+   534                           	line	65
+   535                           	
+   536  07D2                     l2752:	
+   537                           ;I2C SLAVE.c: 65: SSPCON2=0x00;
+   538  07D2  1683               	bsf	status, 5	;RP0=1, select bank1
+   539  07D3  1303               	bcf	status, 6	;RP1=0, select bank1
+   540  07D4  0191               	clrf	(145)^080h	;volatile
+   541                           	line	66
+   542                           	
+   543  07D5                     l2754:	
+   544                           ;I2C SLAVE.c: 66: SSPADD=0x24;
+   545  07D5  3024               	movlw	(024h)
+   546  07D6  0093               	movwf	(147)^080h	;volatile
+   547                           	line	67
+   548                           	
+   549  07D7                     l2756:	
+   550                           ;I2C SLAVE.c: 67: SSPBUF=0;
+   551  07D7  1283               	bcf	status, 5	;RP0=0, select bank0
+   552  07D8  1303               	bcf	status, 6	;RP1=0, select bank0
+   553  07D9  0193               	clrf	(19)	;volatile
+   554                           	line	68
+   555                           	
+   556  07DA                     l2758:	
+   557                           ;I2C SLAVE.c: 68: SSPIF=0;
+   558  07DA  118C               	bcf	(99/8),(99)&7
+   559  07DB  2FDC               	goto	l2760
+   560                           	line	70
+   561                           ;I2C SLAVE.c: 70: while(1)
+   562                           	
+   563  07DC                     l707:	
+   564                           	line	72
+   565                           	
+   566  07DC                     l2760:	
+   567                           ;I2C SLAVE.c: 71: {
+   568                           ;I2C SLAVE.c: 72: i2c_Start();
+   569  07DC  120A  118A  26F6   	fcall	_i2c_Start
+              120A  118A         
+   570                           	line	73
+   571                           	
+   572  07E1                     l2762:	
+   573                           ;I2C SLAVE.c: 73: if(ACKSTAT==0)
+   574  07E1  1683               	bsf	status, 5	;RP0=1, select bank1
+   575  07E2  1303               	bcf	status, 6	;RP1=0, select bank1
+   576  07E3  1B11               	btfsc	(1166/8)^080h,(1166)&7
+   577  07E4  2FE6               	goto	u2331
+   578  07E5  2FE7               	goto	u2330
+   579  07E6                     u2331:
+   580  07E6  2FDC               	goto	l2760
+   581  07E7                     u2330:
+   582                           	line	75
+   583                           	
+   584  07E7                     l2764:	
+   585                           ;I2C SLAVE.c: 74: {
+   586                           ;I2C SLAVE.c: 75: SSPBUF=0;
+   587  07E7  1283               	bcf	status, 5	;RP0=0, select bank0
+   588  07E8  1303               	bcf	status, 6	;RP1=0, select bank0
+   589  07E9  0193               	clrf	(19)	;volatile
+   590                           	line	76
+   591                           	
+   592  07EA                     l2766:	
+   593                           ;I2C SLAVE.c: 76: ch=receive();
+   594  07EA  120A  118A  273D   	fcall	_receive
+              120A  118A         
+   595  07EF  00F5               	movwf	(??_main+0)+0
+   596  07F0  0875               	movf	(??_main+0)+0,w
+   597  07F1  1283               	bcf	status, 5	;RP0=0, select bank0
+   598  07F2  1303               	bcf	status, 6	;RP1=0, select bank0
+   599  07F3  00A7               	movwf	(main@ch)
+   600                           	line	78
+   601                           	
+   602  07F4                     l2768:	
+   603                           ;I2C SLAVE.c: 78: CKP=1;
+   604  07F4  1614               	bsf	(164/8),(164)&7
+   605                           	line	79
+   606                           	
+   607  07F5                     l2770:	
+   608                           ;I2C SLAVE.c: 79: i2c_Stop();
+   609  07F5  120A  118A  26FF   	fcall	_i2c_Stop
+              120A  118A         
+   610  07FA  2FDC               	goto	l2760
+   611                           	line	80
+   612                           	
+   613  07FB                     l708:	
+   614  07FB  2FDC               	goto	l2760
+   615                           	line	81
+   616                           	
+   617  07FC                     l709:	
+   618                           	line	70
+   619  07FC  2FDC               	goto	l2760
+   620                           	
+   621  07FD                     l710:	
+   622                           	line	82
+   623                           	
+   624  07FD                     l711:	
+   625                           	global	start
+   626  07FD  120A  118A  2800   	ljmp	start
+   627                           	opt stack 0
+   628                           GLOBAL	__end_of_main
+   629  0800                     	__end_of_main:
+   630 ;; =============== function _main ends ============
+   631                           
+   632                           	signat	_main,88
+   633                           	global	_cmd
+   634                           psect	text197,local,class=CODE,delta=2
+   635                           global __ptext197
+   636  0754                     __ptext197:
+   637                           
+   638 ;; *************** function _cmd *****************
+   639 ;; Defined at:
+   640 ;;		line 31 in file "E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CODE\SLAVE\I2C SLAVE
+       .c"
+   641 ;; Parameters:    Size  Location     Type
+   642 ;;  x               1    wreg     unsigned char 
+   643 ;;  y               1    0[COMMON] unsigned char 
+   644 ;; Auto vars:     Size  Location     Type
+   645 ;;  x               1    4[COMMON] unsigned char 
+   646 ;; Return value:  Size  Location     Type
+   647 ;;		None               void
+   648 ;; Registers used:
+   649 ;;		wreg
+   650 ;; Tracked objects:
+   651 ;;		On entry : 0/0
+   652 ;;		On exit  : 0/0
+   653 ;;		Unchanged: 0/0
+   654 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   655 ;;      Params:         1       0       0       0       0
+   656 ;;      Locals:         1       0       0       0       0
+   657 ;;      Temps:          3       0       0       0       0
+   658 ;;      Totals:         5       0       0       0       0
+   659 ;;Total ram usage:        5 bytes
+   660 ;; Hardware stack levels used:    1
+   661 ;; This function calls:
+   662 ;;		Nothing
+   663 ;; This function is called by:
+   664 ;;		_main
+   665 ;; This function uses a non-reentrant model
+   666 ;;
+   667                           psect	text197
+   668                           	file	"E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CO
+                                 DE\SLAVE\I2C SLAVE.c"
+   669                           	line	31
+   670                           	global	__size_of_cmd
+   671  001E                     	__size_of_cmd	equ	__end_of_cmd-_cmd
+   672                           	
+   673  0754                     _cmd:	
+   674                           	opt	stack 7
+   675                           ; Regs used in _cmd: [wreg]
+   676                           ;cmd@x stored from wreg
+   677  0754  00F4               	movwf	(cmd@x)
+   678                           	line	32
+   679                           	
+   680  0755                     l2714:	
+   681                           ;I2C SLAVE.c: 32: RB0=y;
+   682  0755  1870               	btfsc	(cmd@y),0
+   683  0756  2F58               	goto	u2301
+   684  0757  2F5C               	goto	u2300
+   685                           	
+   686  0758                     u2301:
+   687  0758  1283               	bcf	status, 5	;RP0=0, select bank0
+   688  0759  1303               	bcf	status, 6	;RP1=0, select bank0
+   689  075A  1406               	bsf	(48/8),(48)&7
+   690  075B  2F5F               	goto	u2314
+   691  075C                     u2300:
+   692  075C  1283               	bcf	status, 5	;RP0=0, select bank0
+   693  075D  1303               	bcf	status, 6	;RP1=0, select bank0
+   694  075E  1006               	bcf	(48/8),(48)&7
+   695  075F                     u2314:
+   696                           	line	33
+   697                           ;I2C SLAVE.c: 33: RB1=0;
+   698  075F  1086               	bcf	(49/8),(49)&7
+   699                           	line	34
+   700                           ;I2C SLAVE.c: 34: RB2=1;
+   701  0760  1506               	bsf	(50/8),(50)&7
+   702                           	line	35
+   703                           	
+   704  0761                     l2716:	
+   705                           ;I2C SLAVE.c: 35: PORTD=x;
+   706  0761  0874               	movf	(cmd@x),w
+   707  0762  0088               	movwf	(8)	;volatile
+   708                           	line	36
+   709                           	
+   710  0763                     l2718:	
+   711                           ;I2C SLAVE.c: 36: RB2=0;
+   712  0763  1106               	bcf	(50/8),(50)&7
+   713                           	line	37
+   714                           ;I2C SLAVE.c: 37: _delay((unsigned long)((70)*(20000000/4000.0)));
+   715                           	opt asmopt_off
+   716  0764  3002               movlw  2
+   717  0765  00F3               movwf	((??_cmd+0)+0+2),f
+   718  0766  30C7               movlw	199
+   719  0767  00F2               movwf	((??_cmd+0)+0+1),f
+   720  0768  3088               	movlw	136
+   721  0769  00F1               movwf	((??_cmd+0)+0),f
+   722  076A                     u2357:
+   723  076A  0BF1               	decfsz	((??_cmd+0)+0),f
+   724  076B  2F6A               	goto	u2357
+   725  076C  0BF2               	decfsz	((??_cmd+0)+0+1),f
+   726  076D  2F6A               	goto	u2357
+   727  076E  0BF3               	decfsz	((??_cmd+0)+0+2),f
+   728  076F  2F6A               	goto	u2357
+   729  0770  0064               	clrwdt
+   730                           opt asmopt_on
+   731                           
+   732                           	line	38
+   733                           	
+   734  0771                     l702:	
+   735  0771  0008               	return
+   736                           	opt stack 0
+   737                           GLOBAL	__end_of_cmd
+   738  0772                     	__end_of_cmd:
+   739 ;; =============== function _cmd ends ============
+   740                           
+   741                           	signat	_cmd,8312
+   742                           	global	_receive
+   743                           psect	text198,local,class=CODE,delta=2
+   744                           global __ptext198
+   745  073D                     __ptext198:
+   746                           
+   747 ;; *************** function _receive *****************
+   748 ;; Defined at:
+   749 ;;		line 22 in file "E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CODE\SLAVE\I2C SLAVE
+       .c"
+   750 ;; Parameters:    Size  Location     Type
+   751 ;;		None
+   752 ;; Auto vars:     Size  Location     Type
+   753 ;;  s               1    3[COMMON] unsigned char 
+   754 ;; Return value:  Size  Location     Type
+   755 ;;                  1    wreg      unsigned char 
+   756 ;; Registers used:
+   757 ;;		wreg
+   758 ;; Tracked objects:
+   759 ;;		On entry : 0/0
+   760 ;;		On exit  : 0/0
+   761 ;;		Unchanged: 0/0
+   762 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   763 ;;      Params:         0       0       0       0       0
+   764 ;;      Locals:         1       0       0       0       0
+   765 ;;      Temps:          3       0       0       0       0
+   766 ;;      Totals:         4       0       0       0       0
+   767 ;;Total ram usage:        4 bytes
+   768 ;; Hardware stack levels used:    1
+   769 ;; This function calls:
+   770 ;;		Nothing
+   771 ;; This function is called by:
+   772 ;;		_main
+   773 ;; This function uses a non-reentrant model
+   774 ;;
+   775                           psect	text198
+   776                           	file	"E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CO
+                                 DE\SLAVE\I2C SLAVE.c"
+   777                           	line	22
+   778                           	global	__size_of_receive
+   779  0017                     	__size_of_receive	equ	__end_of_receive-_receive
+   780                           	
+   781  073D                     _receive:	
+   782                           	opt	stack 7
+   783                           ; Regs used in _receive: [wreg]
+   784                           	line	24
+   785                           	
+   786  073D                     l2708:	
+   787                           ;I2C SLAVE.c: 23: char s;
+   788                           ;I2C SLAVE.c: 24: SSPIF=1;
+   789  073D  1283               	bcf	status, 5	;RP0=0, select bank0
+   790  073E  1303               	bcf	status, 6	;RP1=0, select bank0
+   791  073F  158C               	bsf	(99/8),(99)&7
+   792                           	line	25
+   793                           	
+   794  0740                     l2710:	
+   795                           ;I2C SLAVE.c: 25: s=SSPBUF;
+   796  0740  0813               	movf	(19),w	;volatile
+   797  0741  00F0               	movwf	(??_receive+0)+0
+   798  0742  0870               	movf	(??_receive+0)+0,w
+   799  0743  00F3               	movwf	(receive@s)
+   800                           	line	26
+   801                           ;I2C SLAVE.c: 26: _delay((unsigned long)((100)*(20000000/4000.0)));
+   802                           	opt asmopt_off
+   803  0744  3003               movlw  3
+   804  0745  00F2               movwf	((??_receive+0)+0+2),f
+   805  0746  308A               movlw	138
+   806  0747  00F1               movwf	((??_receive+0)+0+1),f
+   807  0748  3056               	movlw	86
+   808  0749  00F0               movwf	((??_receive+0)+0),f
+   809  074A                     u2367:
+   810  074A  0BF0               	decfsz	((??_receive+0)+0),f
+   811  074B  2F4A               	goto	u2367
+   812  074C  0BF1               	decfsz	((??_receive+0)+0+1),f
+   813  074D  2F4A               	goto	u2367
+   814  074E  0BF2               	decfsz	((??_receive+0)+0+2),f
+   815  074F  2F4A               	goto	u2367
+   816  0750  2F51               	nop2
+   817                           opt asmopt_on
+   818                           
+   819                           	line	27
+   820                           ;I2C SLAVE.c: 27: return s;
+   821  0751  0873               	movf	(receive@s),w
+   822  0752  2F53               	goto	l699
+   823                           	
+   824  0753                     l2712:	
+   825                           	line	28
+   826                           	
+   827  0753                     l699:	
+   828  0753  0008               	return
+   829                           	opt stack 0
+   830                           GLOBAL	__end_of_receive
+   831  0754                     	__end_of_receive:
+   832 ;; =============== function _receive ends ============
+   833                           
+   834                           	signat	_receive,89
+   835                           	global	_i2c_Stop
+   836                           psect	text199,local,class=CODE,delta=2
+   837                           global __ptext199
+   838  06FF                     __ptext199:
+   839                           
+   840 ;; *************** function _i2c_Stop *****************
+   841 ;; Defined at:
+   842 ;;		line 16 in file "E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CODE\SLAVE\I2C SLAVE
+       .c"
+   843 ;; Parameters:    Size  Location     Type
+   844 ;;		None
+   845 ;; Auto vars:     Size  Location     Type
+   846 ;;		None
+   847 ;; Return value:  Size  Location     Type
+   848 ;;		None               void
+   849 ;; Registers used:
+   850 ;;		wreg, status,2, status,0, pclath, cstack
+   851 ;; Tracked objects:
+   852 ;;		On entry : 0/0
+   853 ;;		On exit  : 0/0
+   854 ;;		Unchanged: 0/0
+   855 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   856 ;;      Params:         0       0       0       0       0
+   857 ;;      Locals:         0       0       0       0       0
+   858 ;;      Temps:          0       0       0       0       0
+   859 ;;      Totals:         0       0       0       0       0
+   860 ;;Total ram usage:        0 bytes
+   861 ;; Hardware stack levels used:    1
+   862 ;; Hardware stack levels required when called:    1
+   863 ;; This function calls:
+   864 ;;		_i2c_Wait
+   865 ;; This function is called by:
+   866 ;;		_main
+   867 ;; This function uses a non-reentrant model
+   868 ;;
+   869                           psect	text199
+   870                           	file	"E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CO
+                                 DE\SLAVE\I2C SLAVE.c"
+   871                           	line	16
+   872                           	global	__size_of_i2c_Stop
+   873  0009                     	__size_of_i2c_Stop	equ	__end_of_i2c_Stop-_i2c_Stop
+   874                           	
+   875  06FF                     _i2c_Stop:	
+   876                           	opt	stack 6
+   877                           ; Regs used in _i2c_Stop: [wreg+status,2+status,0+pclath+cstack]
+   878                           	line	17
+   879                           	
+   880  06FF                     l2704:	
+   881                           ;I2C SLAVE.c: 17: i2c_Wait();
+   882  06FF  120A  118A  2708   	fcall	_i2c_Wait
+              120A  118A         
+   883                           	line	18
+   884                           	
+   885  0704                     l2706:	
+   886                           ;I2C SLAVE.c: 18: PEN=1;
+   887  0704  1683               	bsf	status, 5	;RP0=1, select bank1
+   888  0705  1303               	bcf	status, 6	;RP1=0, select bank1
+   889  0706  1511               	bsf	(1162/8)^080h,(1162)&7
+   890                           	line	19
+   891                           	
+   892  0707                     l696:	
+   893  0707  0008               	return
+   894                           	opt stack 0
+   895                           GLOBAL	__end_of_i2c_Stop
+   896  0708                     	__end_of_i2c_Stop:
+   897 ;; =============== function _i2c_Stop ends ============
+   898                           
+   899                           	signat	_i2c_Stop,88
+   900                           	global	_i2c_Start
+   901                           psect	text200,local,class=CODE,delta=2
+   902                           global __ptext200
+   903  06F6                     __ptext200:
+   904                           
+   905 ;; *************** function _i2c_Start *****************
+   906 ;; Defined at:
+   907 ;;		line 10 in file "E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CODE\SLAVE\I2C SLAVE
+       .c"
+   908 ;; Parameters:    Size  Location     Type
+   909 ;;		None
+   910 ;; Auto vars:     Size  Location     Type
+   911 ;;		None
+   912 ;; Return value:  Size  Location     Type
+   913 ;;		None               void
+   914 ;; Registers used:
+   915 ;;		wreg, status,2, status,0, pclath, cstack
+   916 ;; Tracked objects:
+   917 ;;		On entry : 0/0
+   918 ;;		On exit  : 0/0
+   919 ;;		Unchanged: 0/0
+   920 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   921 ;;      Params:         0       0       0       0       0
+   922 ;;      Locals:         0       0       0       0       0
+   923 ;;      Temps:          0       0       0       0       0
+   924 ;;      Totals:         0       0       0       0       0
+   925 ;;Total ram usage:        0 bytes
+   926 ;; Hardware stack levels used:    1
+   927 ;; Hardware stack levels required when called:    1
+   928 ;; This function calls:
+   929 ;;		_i2c_Wait
+   930 ;; This function is called by:
+   931 ;;		_main
+   932 ;; This function uses a non-reentrant model
+   933 ;;
+   934                           psect	text200
+   935                           	file	"E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CO
+                                 DE\SLAVE\I2C SLAVE.c"
+   936                           	line	10
+   937                           	global	__size_of_i2c_Start
+   938  0009                     	__size_of_i2c_Start	equ	__end_of_i2c_Start-_i2c_Start
+   939                           	
+   940  06F6                     _i2c_Start:	
+   941                           	opt	stack 6
+   942                           ; Regs used in _i2c_Start: [wreg+status,2+status,0+pclath+cstack]
+   943                           	line	11
+   944                           	
+   945  06F6                     l2700:	
+   946                           ;I2C SLAVE.c: 11: i2c_Wait();
+   947  06F6  120A  118A  2708   	fcall	_i2c_Wait
+              120A  118A         
+   948                           	line	12
+   949                           	
+   950  06FB                     l2702:	
+   951                           ;I2C SLAVE.c: 12: SEN=1;
+   952  06FB  1683               	bsf	status, 5	;RP0=1, select bank1
+   953  06FC  1303               	bcf	status, 6	;RP1=0, select bank1
+   954  06FD  1411               	bsf	(1160/8)^080h,(1160)&7
+   955                           	line	13
+   956                           	
+   957  06FE                     l693:	
+   958  06FE  0008               	return
+   959                           	opt stack 0
+   960                           GLOBAL	__end_of_i2c_Start
+   961  06FF                     	__end_of_i2c_Start:
+   962 ;; =============== function _i2c_Start ends ============
+   963                           
+   964                           	signat	_i2c_Start,88
+   965                           	global	_i2c_Wait
+   966                           psect	text201,local,class=CODE,delta=2
+   967                           global __ptext201
+   968  0708                     __ptext201:
+   969                           
+   970 ;; *************** function _i2c_Wait *****************
+   971 ;; Defined at:
+   972 ;;		line 5 in file "E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CODE\SLAVE\I2C SLAVE.
+       c"
+   973 ;; Parameters:    Size  Location     Type
+   974 ;;		None
+   975 ;; Auto vars:     Size  Location     Type
+   976 ;;		None
+   977 ;; Return value:  Size  Location     Type
+   978 ;;		None               void
+   979 ;; Registers used:
+   980 ;;		wreg, status,2
+   981 ;; Tracked objects:
+   982 ;;		On entry : 0/0
+   983 ;;		On exit  : 0/0
+   984 ;;		Unchanged: 0/0
+   985 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   986 ;;      Params:         0       0       0       0       0
+   987 ;;      Locals:         0       0       0       0       0
+   988 ;;      Temps:          0       0       0       0       0
+   989 ;;      Totals:         0       0       0       0       0
+   990 ;;Total ram usage:        0 bytes
+   991 ;; Hardware stack levels used:    1
+   992 ;; This function calls:
+   993 ;;		Nothing
+   994 ;; This function is called by:
+   995 ;;		_i2c_Start
+   996 ;;		_i2c_Stop
+   997 ;; This function uses a non-reentrant model
+   998 ;;
+   999                           psect	text201
+  1000                           	file	"E:\02-CODING\05-LYCASOFT CODING\02-CODING\01-PIC16F877A\33-NEW I2C ALTERNATIVE CO
+                                 DE\SLAVE\I2C SLAVE.c"
+  1001                           	line	5
+  1002                           	global	__size_of_i2c_Wait
+  1003  0010                     	__size_of_i2c_Wait	equ	__end_of_i2c_Wait-_i2c_Wait
+  1004                           	
+  1005  0708                     _i2c_Wait:	
+  1006                           	opt	stack 6
+  1007                           ; Regs used in _i2c_Wait: [wreg+status,2]
+  1008                           	line	6
+  1009                           	
+  1010  0708                     l2694:	
+  1011                           ;I2C SLAVE.c: 6: while ( ( SSPCON2 & 0x1F ) || ( SSPSTAT & 0x04 ) );
+  1012  0708  2F0A               	goto	l2696
+  1013                           	
+  1014  0709                     l688:	
+  1015  0709  2F0A               	goto	l2696
+  1016                           	
+  1017  070A                     l687:	
+  1018                           	
+  1019  070A                     l2696:	
+  1020  070A  1683               	bsf	status, 5	;RP0=1, select bank1
+  1021  070B  1303               	bcf	status, 6	;RP1=0, select bank1
+  1022  070C  0811               	movf	(145)^080h,w
+  1023  070D  391F               	andlw	01Fh
+  1024  070E  1D03               	btfss	status,2
+  1025  070F  2F11               	goto	u2281
+  1026  0710  2F12               	goto	u2280
+  1027  0711                     u2281:
+  1028  0711  2F0A               	goto	l2696
+  1029  0712                     u2280:
+  1030                           	
+  1031  0712                     l2698:	
+  1032  0712  1914               	btfsc	(148)^080h,(2)&7
+  1033  0713  2F15               	goto	u2291
+  1034  0714  2F16               	goto	u2290
+  1035  0715                     u2291:
+  1036  0715  2F0A               	goto	l2696
+  1037  0716                     u2290:
+  1038  0716  2F17               	goto	l690
+  1039                           	
+  1040  0717                     l689:	
+  1041                           	line	7
+  1042                           	
+  1043  0717                     l690:	
+  1044  0717  0008               	return
+  1045                           	opt stack 0
+  1046                           GLOBAL	__end_of_i2c_Wait
+  1047  0718                     	__end_of_i2c_Wait:
+  1048 ;; =============== function _i2c_Wait ends ============
+  1049                           
+  1050                           	signat	_i2c_Wait,88
+  1051                           psect	text202,local,class=CODE,delta=2
+  1052                           global __ptext202
+  1053  0000                     __ptext202:
+  1054                           	global	btemp
+  1055  007E                     	btemp set 07Eh
+  1056                           
+  1057                           	DABS	1,126,2	;btemp
+  1058                           	global	wtemp0
+  1059  007E                     	wtemp0 set btemp
+
+
+HI-TECH Software PICC Macro Assembler V9.83 build 10920 
+Symbol Table                                                                                   Fri Jan 11 18:54:09 2019
+
+                   pc 0002                    _RD 0C60                    _WR 0C61                    fsr 0004  
+                 l702 0771                   l710 07FD                   l711 07FD                   l707 07DC  
+                 l708 07FB                   l709 07FC                   l690 0717                   l693 06FE  
+                 l687 070A                   l688 0709                   l696 0707                   l689 0717  
+                 l699 0753                   _CKP 00A4                   _GIE 005F                   _RB0 0030  
+                 _RB1 0031                   _RB2 0032                   _PEN 048A                   _SEN 0488  
+                 _cmd 0754                   fsr0 0004                   indf 0000                  ?_cmd 0070  
+                l2700 06F6                  l2702 06FB                  l2710 0740                  l2704 06FF  
+                l2712 0753                  l2720 0772                  l2706 0704                  l2714 0755  
+                l2730 0793                  l2722 0787                  l2708 073D                  l2716 0761  
+                l2740 07A8                  l2732 0796                  l2724 078A                  l2718 0763  
+                l2750 07CE                  l2742 07AF                  l2734 0797                  l2726 078D  
+                l2760 07DC                  l2752 07D2                  l2744 07B6                  l2736 079A  
+                l2728 0790                  l2770 07F5                  l2762 07E1                  l2754 07D5  
+                l2746 07BD                  l2738 07A1                  l2764 07E7                  l2756 07D7  
+                l2748 07CA                  l2694 0708                  l2766 07EA                  l2758 07DA  
+                l2696 070A                  l2768 07F4                  l2698 0712                  u2300 075C  
+                u2301 0758                  u2320 077A                  u2314 075F                  u2330 07E7  
+                u2331 07E6                  u2280 0712                  u2281 0711                  u2290 0716  
+                u2291 0715                  u2347 07C3                  u2357 076A                  u2367 074A  
+                _WREN 0C62                  _main 0772                  cmd@x 0074                  cmd@y 0070  
+                btemp 007E                  start 0000                 ??_cmd 0071                 ?_main 0070  
+               _EEADR 010D                 _CARRY 0018                 _PORTB 0006                 _PORTC 0007  
+               _PORTD 0008                 _TRISB 0086                 _TRISD 0088                 _SSPIF 0063  
+     __end_of_receive 0754                 main@a 0020                 pclath 000A                 status 0003  
+               wtemp0 007E          __end_of_main 0800      __end_of_i2c_Wait 0718      __end_of_i2c_Stop 0708  
+              ??_main 0075                _EEDATA 010C                _EECON1 018C                _EECON2 018D  
+  __size_of_i2c_Start 0009                _SSPADD 0093                _TRISC3 043B                _TRISC4 043C  
+              _SSPCON 0014                _SSPBUF 0013                main@ch 0027             ??_receive 0070  
+      __pcstackCOMMON 0070          __pidataBANK0 06EF     __end_of_i2c_Start 06FF             ?_i2c_Wait 0070  
+           ?_i2c_Stop 0070            __pmaintext 0772               _ACKSTAT 048E               _SSPCON2 0091  
+             _SSPSTAT 0094            ??_i2c_Wait 0070            ??_i2c_Stop 0070          __size_of_cmd 001E  
+             _receive 073D  end_of_initialization 0726               init_ram 072E             _i2c_Start 06F6  
+ start_initialization 0718           __end_of_cmd 0772     __size_of_i2c_Wait 0010     __size_of_i2c_Stop 0009  
+         __pdataBANK0 0028            ?_i2c_Start 0070         __pcstackBANK0 0020             __ptext200 06F6  
+           __ptext201 0708             __ptext202 0000             __ptext197 0754             __ptext198 073D  
+           __ptext199 06FF              ?_receive 0070             main@F1107 0028           ??_i2c_Start 0070  
+            _i2c_Wait 0708              _i2c_Stop 06FF             init_fetch 072A      __size_of_receive 0017  
+       __size_of_main 008E              receive@s 0073  

@@ -1,0 +1,7 @@
+_i2c_Stop: CODE, 1791 0 9
+_i2c_Wait: CODE, 1800 0 16
+_main: CODE, 1906 0 142
+_receive: CODE, 1853 0 23
+_i2c_Start: CODE, 1782 0 9
+_cmd: CODE, 1876 0 30
+Total: 229
